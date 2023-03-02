@@ -1,0 +1,35 @@
+{
+  "name": "@amplitude/sdk-adapter",
+  "version": "0.0.1",
+  "description": "Amplitude SDK Wrapper Tool",
+  "author": "Amplitude",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "devDependencies": {
+    "@amplitude/analytics-types": "^0.17.0",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "jscodeshift": "^0.14.0"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amplitude/sdk-migrate.git"
+  },
+  "keywords": [
+    "analytics",
+    "amplitude"
+  ],
+  "bugs": {
+    "url": "https://github.com/amplitude/sdk-migrate/issues"
+  },
+  "homepage": "https://github.com/amplitude/sdk-migrate#readme"
+}
