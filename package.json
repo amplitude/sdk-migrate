@@ -1,6 +1,6 @@
 {
   "name": "@amplitude/sdk-migrate",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Amplitude SDK Migration Tool",
   "author": "Amplitude",
   "license": "MIT",

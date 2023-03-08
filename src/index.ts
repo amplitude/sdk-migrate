@@ -1,22 +1,19 @@
-export default function transformer(file, { jscodeshift }): string {
-
+export default function transformer(file: string, { jscodeshift }): string {
   jscodeshift.registerMethods({
     findIdentifiers: function () {
       return this.find(jscodeshift.Identifier);
     },
     replaceImportDeclaration: function () {
-
       return this.find(jscodeshift.ImportDeclaration, {
         source: {
-          value: '@segment/analytics-next',
+          value: "@segment/analytics-next",
         },
-      })
-      .replaceWith(nodePath => {
+      }).replaceWith((nodePath) => {
         const node = nodePath.node;
-        node.source.value = '@amplitude/analytics-browser';
+        node.source.value = "@amplitude/analytics-browser";
         return node;
-      })
-    }
+      });
+    },
   });
 
   jscodeshift.registerMethods({
@@ -24,16 +21,16 @@ export default function transformer(file, { jscodeshift }): string {
       return this.find(jscodeshift.CallExpression, {
         callee: {
           object: { name: "analytics" },
-          property: { name: "track" }
-        }
+          property: { name: "track" },
+        },
       }).replaceWith(({ node }) =>
-        jscodeshift.callExpression(jscodeshift.identifier("amplitude"), node.arguments)
+        jscodeshift.callExpression(
+          jscodeshift.identifier("amplitude"),
+          node.arguments
+        )
       );
-    }
+    },
   });
 
-  return jscodeshift(file.source)
-    .findSegmentExpressionStatements()
-
-    .toSource();
+  return jscodeshift(file.source).findSegmentExpressionStatements().toSource();
 }
