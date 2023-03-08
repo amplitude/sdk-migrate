@@ -13,7 +13,7 @@ Amplitude's tool to ease engineering cost of migrating SDK libraries. Currently 
 
 ### 1. Install
 ```
-npm install 
+npm install @amplitude/sdk-migrate
 ```
 
 ### 2. Import packages
