@@ -1,7 +1,7 @@
 {
-  "name": "@amplitude/sdk-adapter",
+  "name": "@amplitude/sdk-migrate",
   "version": "0.0.1",
-  "description": "Amplitude SDK Wrapper Tool",
+  "description": "Amplitude SDK Migration Tool",
   "author": "Amplitude",
   "license": "MIT",
   "main": "lib/index.js",
