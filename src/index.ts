@@ -1,36 +1,20 @@
-export default function transformer(file: string, { jscodeshift }): string {
-  jscodeshift.registerMethods({
-    findIdentifiers: function () {
-      return this.find(jscodeshift.Identifier);
-    },
-    replaceImportDeclaration: function () {
-      return this.find(jscodeshift.ImportDeclaration, {
-        source: {
-          value: "@segment/analytics-next",
-        },
-      }).replaceWith((nodePath) => {
-        const node = nodePath.node;
-        node.source.value = "@amplitude/analytics-browser";
-        return node;
-      });
-    },
-  });
+#!/usr/bin/env node
+const { run: jscodeshift } = require("jscodeshift/src/Runner");
 
-  jscodeshift.registerMethods({
-    findSegmentExpressionStatements: function () {
-      return this.find(jscodeshift.CallExpression, {
-        callee: {
-          object: { name: "analytics" },
-          property: { name: "track" },
-        },
-      }).replaceWith(({ node }) =>
-        jscodeshift.callExpression(
-          jscodeshift.identifier("amplitude"),
-          node.arguments
-        )
-      );
-    },
-  });
+import path from "path";
+import { argv } from "node:process";
+import glob from "glob";
 
-  return jscodeshift(file.source).findSegmentExpressionStatements().toSource();
-}
+const transformPath = path.resolve("./lib/transform.js");
+
+(async () => {
+  const paths = await glob(argv.slice(2));
+
+  const options = {
+    print: true,
+    verbose: 1,
+  };
+
+  const res = await jscodeshift(transformPath, paths, options);
+
+})();
