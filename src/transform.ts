@@ -10,7 +10,7 @@ export const parser = "tsx";
 declare module "jscodeshift/src/Collection" {
   interface Collection<N> {
     replaceImportDeclaration: typeof customCollectionMethods.replaceImportDeclaration;
-    replaceSegmentExpressionStatements: typeof customCollectionMethods.replaceSegmentExpressionStatements;
+    replaceTrack: typeof customCollectionMethods.replaceTrack;
   }
 }
 
@@ -18,16 +18,15 @@ const customCollectionMethods = {
   replaceImportDeclaration: function (
     this: Collection<any>
   ): Collection<ImportDeclaration> {
-    return this.find(jscodeshift.ImportDeclaration, {
+    this.find(jscodeshift.ImportDeclaration, {
       source: {
         value: "@segment/analytics-next",
       },
     }).replaceWith(() => AMPLITUDE_IMPORT_DECLARTION);
+    return this;
   },
-  replaceSegmentExpressionStatements: function (
-    this: Collection<any>
-  ): Collection<CallExpression> {
-    return this.find(jscodeshift.CallExpression, {
+  replaceTrack: function (this: Collection<any>): Collection<CallExpression> {
+    this.find(jscodeshift.CallExpression, {
       callee: {
         object: {
           name: "analytics",
@@ -41,6 +40,7 @@ const customCollectionMethods = {
         node.arguments
       );
     });
+    return this;
   },
 };
 
@@ -50,6 +50,6 @@ export default function transformer(file: FileInfo, api: API) {
   jscodeshift.registerMethods(customCollectionMethods);
   return jscodeshift(file.source)
     .replaceImportDeclaration()
-    .replaceSegmentExpressionStatements()
+    .replaceTrack()
     .toSource();
 }
