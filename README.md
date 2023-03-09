@@ -7,23 +7,12 @@
 
 # Amplitude Browser SDK Migration Tool
 
-Amplitude's tool to ease engineering cost of migrating SDK libraries. Currently supported only for the [browser SDK](https://github.com/amplitude/Amplitude-TypeScript/tree/main/packages/analytics-browser). Will traverse your source code and return
+Tool to traverse and transform SDK APIs to Amplitude's. Currently supported only for the [browser SDK](https://github.com/amplitude/Amplitude-TypeScript/tree/main/packages/analytics-browser). 
 
 # Usage
 
-### 1. Install
+Use [glob](https://en.wikipedia.org/wiki/Glob_(programming)) patterns to transform your JS/TS files
+
 ```
-npm install @amplitude/sdk-migrate
-```
-
-### 2. Import packages
-
-```js
-import { transformer } from "@amplitude/sdk-migrate";
-```
-
-### 3. Create instances of Amplitude and Segment SDKs
-
-```js
-const transformedCode = transformer(sourceCode)
+npx @amplitude/sdk-migrate './src/**/*.{js,ts}'
 ```
